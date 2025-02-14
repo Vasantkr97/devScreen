@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum Role {
+  candidate
+  interviewer
+}
+
+
+model User {
+  id                  String        @id @default(cuid()) //Primary Key
+  clerkId             String        @unique
+  email               String        @unique
+  name                String  
+  image               String?
+  role                Role          //candidate or interviewer
+  createdAt           DateTime      @default(now())
+  @@index([clerkId])   //Index on ClerkId for faster queries
+  Comment             Comment[]
+  interviews          interviews[]
+}
+
+model interviews {
+  id                  String        @id @default(cuid())
+  title               String
+  candidateId         String
+  candidate           User          @relation(fields: [candidateId], references: [id])
+  interviewerIds      String[]
+  streamCallId        String
+  status              String
+  startTime           Int
+  endTime             Int?
+  description         String?
+
+  //Relations
+  comment             Comment[] 
+
+  @@index([candidateId])  //Faster lookups for candidate interviews
+  @@index([streamCallId]) //Ensure Stream call IDs are unique
+}
+
+
+model Comment {
+  id                  String        @id @default(cuid())
+  content             String
+  rating              Int
+  interviewerId       String
+  interviewer         User          @relation(fields: [interviewerId], references: [id])
+  interviewId         String
+  interview           interviews    @relation(fields: [interviewId], references: [id])
+
+  @@index([interviewerId])
+}
