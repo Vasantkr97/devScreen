@@ -1,5 +1,4 @@
 import prisma from "@/db/client";
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 

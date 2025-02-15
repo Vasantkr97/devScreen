@@ -6,8 +6,9 @@ import { SparklesIcon } from 'lucide-react';
 import useUserRole from '@/hooks/useUserRole';
 
 const DashboardBtn = () => {
-  console.log(useUserRole)
     const  { isCandidate, isInterviewer } =  useUserRole();
+    console.log(isCandidate)
+    console.log(isInterviewer)
 
     if (isCandidate) return null;
 

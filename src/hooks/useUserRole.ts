@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function useUserRole() { 
     const { user } = useUser();
-    console.log("useUser id in hook: ", user);
     const [role, setRole] = useState({
         isInterviewer: false,
         isCandidate: false,
@@ -19,7 +18,6 @@ export default function useUserRole() {
                 if (!response.ok) throw new Error("Failed to fetch user role");
 
                 const userData = await response.json();
-                console.log("UserData:::::", userData);
                 
                 if (userData) {
                     setRole({
@@ -34,6 +32,6 @@ export default function useUserRole() {
 
         fetchUserRole();
     }, [user?.id]);
-
+    
     return role;
 }

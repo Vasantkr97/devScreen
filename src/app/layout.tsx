@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,10 +38,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen">
-            <Navbar/>
-            <main className="px-4 sm:px-6 lg:px-8">{children}</main>
-          </div>
+          <SignedIn>
+            <div className="min-h-screen">
+              <Navbar/>
+              <main className="px-4 sm:px-6 lg:px-8">{children}</main>
+            </div>
+          </SignedIn>
+
+          <SignedOut>
+            <RedirectToSignIn />
+          </SignedOut>
         </ThemeProvider>
       </body>
     </html>

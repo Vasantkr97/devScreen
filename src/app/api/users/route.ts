@@ -5,9 +5,8 @@ import { NextResponse } from "next/server";
 //Fetch all users OR a single User by ClerkId
 export async function GET(req: Request) {
     try {
-       
-            const users = await getUsers();
-            return NextResponse.json(users)
+        const users = await getUsers();
+        return NextResponse.json(users)
     } catch (error) {
         console.log("Error fetching user(s): ", error);
         return NextResponse.json({ error: "Failed to fetch users"}, { status: 500})
