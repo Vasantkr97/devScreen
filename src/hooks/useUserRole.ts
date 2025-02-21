@@ -7,6 +7,7 @@ export default function useUserRole() {
     const [role, setRole] = useState({
         isInterviewer: false,
         isCandidate: false,
+        loading: true, //Add loading state 
     });
 
     useEffect(() => {
@@ -23,6 +24,7 @@ export default function useUserRole() {
                     setRole({
                         isInterviewer: userData.role === "interviewer",
                         isCandidate: userData.role === "candidate",
+                        loading: false,
                     });
                 }
             } catch(error) {

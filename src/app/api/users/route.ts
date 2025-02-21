@@ -2,7 +2,7 @@ import { createUser, getUserByclerkId, getUsers } from "@/db/user";
 import { NextResponse } from "next/server";
 
 
-//Fetch all users OR a single User by ClerkId
+//Fetch all users 
 export async function GET(req: Request) {
     try {
         const users = await getUsers();
@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     }
 };
 
-
+//Create User
 export async function POST(req: Request) {
     try {
         const body = await req.json();

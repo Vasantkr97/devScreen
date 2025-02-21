@@ -14,8 +14,8 @@ const Navbar = () => {
             href='/'
             className='flex items-center gap-2 font-semibold text-2xl mr-6 font-mono hover:opacity-80 transition-opacity'
           >
-            <CodeIcon className='size-8 text-blue-300' />
-            <span className='bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 bg-clip-text text-transparent'>
+            <CodeIcon className='size-8 text-white' />
+            <span className='bg-gradient-to-r from-blue-500 font-bold to-blue-600 bg-clip-text text-transparent'>
               devScreen
             </span>
           </Link>

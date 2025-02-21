@@ -7,8 +7,7 @@ import useUserRole from '@/hooks/useUserRole';
 
 const DashboardBtn = () => {
     const  { isCandidate, isInterviewer } =  useUserRole();
-    console.log(isCandidate)
-    console.log(isInterviewer)
+
 
     if (isCandidate) return null;
 

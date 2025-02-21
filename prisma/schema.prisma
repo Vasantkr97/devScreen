@@ -30,19 +30,17 @@ model User {
   createdAt           DateTime      @default(now())
   @@index([clerkId])   //Index on ClerkId for faster queries
   Comment             Comment[]
-  interviews          interviews[]
 }
 
 model interviews {
   id                  String        @id @default(cuid())
   title               String
   candidateId         String
-  candidate           User          @relation(fields: [candidateId], references: [id])
   interviewerIds      String[]
   streamCallId        String
   status              String
-  startTime           Int
-  endTime             Int?
+  startTime           DateTime
+  endTime             DateTime?
   description         String?
 
   //Relations

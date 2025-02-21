@@ -1,8 +1,7 @@
-import prisma from "@/db/client";
 import { getUserByclerkId } from "@/db/user";
 import { NextResponse } from "next/server";
 
-
+//get Users by ID
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }>}) {
     try {
         const userId = (await params).id;

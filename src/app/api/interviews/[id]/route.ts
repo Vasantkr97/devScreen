@@ -3,13 +3,12 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 
-
+//GetinterviewsBYStreamId
 export async function GET(req: Request, { params,}: { params: Promise<{ id: string }>})  {
     try {
         const id = (await params)?.id;
 
         const { userId } = await auth()
-        console.log("Auth UserID: ", userId)
 
         if (!userId) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -22,7 +21,7 @@ export async function GET(req: Request, { params,}: { params: Promise<{ id: stri
 
         const myInterviews = await prisma.interviews.findMany({
             where: {
-                candidateId: id
+                streamCallId: id
             }
         })
 
