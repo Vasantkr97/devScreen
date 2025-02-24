@@ -14,26 +14,27 @@ export const groupInterviews = (interviews: Interview[]) => {
   if (!interviews) return {};
 
   return interviews.reduce((acc: any, interview: Interview) => {
-    const date = new Date(interview.startTime*1000);
+    const date = new Date(interviews[0]?.startTime);
     const now = new Date();
 
     if (interview.status === "succeeded") {
-      acc.succeeded = [...acc(acc.succeeded || []), interview];
+      acc.succeeded = [...(acc.succeeded || []), interview];
     } else if (interview.status === "failed") {
-      acc.failed = [...acc(acc.failed || []), interview];
+      acc.failed = [...(acc.failed || []), interview];
     } else if (isBefore(date, now)) {
-      acc.completed = [...acc(acc.completed || []), interview]
+      acc.completed = [...(acc.completed || []), interview]
     } else if (isAfter(date, now)) {
-      acc.upcoming = [...acc(acc.upcoming || []), interview]
+      acc.upcoming = [...(acc.upcoming || []), interview]
     }
 
     return acc
-  },[])
+  },{})
 };
 
 export const getCandidateInfo = (users: Users[], candidateId: string) => {
-  const candidate = users?.find((user) => user.id === candidateId);
+  const candidate = users?.find((user) => user.clerkId === candidateId);
 
+  console.log(candidate)
   return {
     name: candidate?.name || "Unknown Candidate",
     image: candidate?.image || "",
