@@ -9,14 +9,7 @@ import { useEffect } from "react";
 const SchedulePage = () => {
   const router = useRouter();
 
-  const { isInterviewer, isCandidate, loading } = useUserRole();
-  console.log("page.tsx - Rendering");
-  console.log("IsInterviewer:", isInterviewer);
-  console.log("IsCandidate:", isCandidate);
-
-  useEffect(() => {
-
-  }, [isInterviewer, isCandidate])
+  const { isInterviewer, loading } = useUserRole();
 
   if (loading) return <p>Loading...</p>
 

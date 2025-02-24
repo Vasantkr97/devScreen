@@ -13,11 +13,26 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+const updateStatus = async ({ id , status }: { id: string, status: string }) => {
+  const response = await fetch(`/api/interviews/updateStatus/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ status }),
+  });
 
+  if (!response.ok) {
+    throw new Error("Failed to update status");
+  };
+
+  return response.json();
+}
 
 const DashboardPage = () => {
   const [interviews, setInterviews] = useState([]);
   const [users, setUsers] = useState([]);
+
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -72,7 +87,13 @@ const DashboardPage = () => {
   const handleStatusUpdate = async (interviewId: string, status: string) => {
     try {
       await updateStatus({ id: interviewId, status});
-      toast.success(`Interview marked as ${status}`)
+      toast.success(`Interview marked as ${status}`);
+      const res = await fetch(`/api/interviews`);
+
+      if (res.ok) {
+        const updatedData = await res.json();
+        setInterviews(updatedData);
+      }
     } catch (error) {
       toast.error("Failed to update status")
     }
@@ -172,6 +193,3 @@ const DashboardPage = () => {
 
 export default DashboardPage
 
-function updateStatus(arg0: { id: string; status: string; }) {
-  throw new Error("Function not implemented.");
-}

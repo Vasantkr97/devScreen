@@ -97,7 +97,11 @@ const InterviewScheduleUI = () => {
                 })
             });
 
-            console.log(res);
+            console.log("inside the meeting SChedule: ",res);
+            
+            const newInterview = await res.json();
+
+            setInterviews((prevInterviews) => [...prevInterviews, newInterview])
 
             setOpen(false);
             toast.success("Meeting scheduled successfully");

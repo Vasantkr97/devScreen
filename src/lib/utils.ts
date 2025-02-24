@@ -14,7 +14,7 @@ export const groupInterviews = (interviews: Interview[]) => {
   if (!interviews) return {};
 
   return interviews.reduce((acc: any, interview: Interview) => {
-    const date = new Date(interviews[0]?.startTime);
+    const date = new Date(interview.startTime);
     const now = new Date();
 
     if (interview.status === "succeeded") {
