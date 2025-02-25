@@ -21,10 +21,12 @@ const InterviewScheduleUI = () => {
     const [isCreating, setIsCreating] = useState(false);
     const [interviews, setInterviews] = useState<interviews[]>([]);
     const [users, setUsers] = useState<User[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const [interviewsRes, usersRes] = await Promise.all([
                     fetch("/api/interviews").then((res) => res.json()),
                     fetch("/api/users").then((res) => res.json()),
@@ -34,6 +36,8 @@ const InterviewScheduleUI = () => {
 
             } catch(error) {
                 console.log("Failed to fetch data", error);
+            } finally {
+                setLoading(false)
             }
         }
         fetchData();
@@ -301,7 +305,7 @@ const InterviewScheduleUI = () => {
         </div>
 
         {/* Loading State and Meeting Card */}
-        {!interviewers ? (
+        {loading ? (
             <div className='flex justify-center py-12'>
                 <Loader2Icon className='size-8 animate-spin text-muted-foreground' />
             </div>

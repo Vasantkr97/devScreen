@@ -1,5 +1,6 @@
 'use client'
 import ActionCard from "@/components/ActionCard";
+import LoaderUI from "@/components/LoaderUI";
 import MeetingCard from "@/components/MeetingCard";
 import MeetingModal from "@/components/MeetingModal";
 import { QUICK_ACTIONS } from "@/constants";
@@ -17,17 +18,21 @@ export default function Home() {
   const [showModel, setShowModal] = useState(false);
   const [modalType, setModalType] = useState<"start" | "join">()
   const [interviews, setInterviews] = useState<interviews[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInterviews = async () => {
       try {
+        setLoading(true);
         const res = await fetch("/api/interviews/getMyInterview");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setInterviews(data);
       } catch (error) {
         console.log(error);
-        };
+      }finally {
+        setLoading(false);
+      }
     }
     fetchInterviews();
   }, []);
@@ -49,10 +54,13 @@ export default function Home() {
   };
 
   if (isInterviewer === undefined ||  isCandidate === undefined) {
-    return <div>Loading...</div>
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <LoaderUI />
+      </div>
+    );
   }
   
-
   return (
     <div className="container max-w-7xl mx-auto p-6">
       {/* welcome section */}
@@ -94,7 +102,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8">
-            {interviews === undefined ? (
+            {loading ?  (
               <div className="flex justify-center py-12">
                 <Loader2Icon className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
